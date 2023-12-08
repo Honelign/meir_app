@@ -1,0 +1,154 @@
+{
+    
+    "home": "בית",
+    "videos": "סרטונים",
+    "categories" : "קטגוריות",
+    "profile": "פּרוֹפִיל",
+    
+
+    "welcome to" : "ברוך הבא ל",
+    "sign in to continue": "היכנס כדי להמשיך",
+    "skip": "לדלג",
+    "done": "בוצע",
+
+    "intro-title1" : "שמור, סימנייה ושתף",
+    "intro-title2" : "חקור את המילה האחרונה של טוראס אביגדור",
+    "intro-title3" : "היה הראשון לקבל הודעה",
+    "intro-description1" : "סמן, לייק והגיב לקריאות האהובות עליך על טוראס אביגדור ושתף ברחבי האינטרנט",
+    "intro-description2" : "חקור את הפרשה השבועית, שאלות ותשובות, פודקאסט, וידאו ואודיו",
+    "intro-description3" : "קבל הודעה מדי יום על שאלות ותשובות חדשות ופרשת שבועית",
+    "get started" : "להתחיל",
+    "don't have social accounts?" : "אין לך חשבונות חברתיים?",
+    "continue with email >>" : "המשך עם אימייל >>",
+
+    "sign up": "הירשם",
+    "sign in": "להתחבר",
+    "follow the simple steps": "בצע את השלבים הפשוטים",
+    "name": "שֵׁם",
+    "already have an account?": "כבר יש לך חשבון?",
+    "forgot password?": "שכחת את הסיסמא?",
+    "reset your password": "לאפס את הסיסמה שלך",
+    "submit": "שלח",
+    "sign in successful!" : "הכניסה הצליחה!",
+    "sign up successful!": "נרשם בהצלחה!",
+    "don't have an account?" : "אין לך חשבון?",
+
+
+
+    "search news" : "חפש מאמרים",
+    "popular news" : "מאמרים פופולריים",
+    "recent news" : "מאמרים אחרונים",
+    "explore": "הכי מאוחר",
+    "featured": "מומלצים",
+    "view all" : "צפה בהכל",
+
+    "video articles" : "מאמרי וידאו",
+    "most recent": "הכי עדכני",
+    "most popular": "הכי פופולארי",
+    "no categories found": "לא נמצאו קטגוריות",
+
+    
+
+
+
+    "people like this" : "אנשים כאלה",
+    "you might also like" : "אולי גם תאהב",
+    "no articles found" : "לא נמצאו מאמרים",
+
+
+    
+    "no internet" : "אין חיבור אינטרנט!",
+    "no comments found" : "לא נמצאו הערות",
+    "be the first to comment" : "היה הראשון להגיב",
+
+
+    "recent searchs" : "חיפושים אחרונים",
+    "search-description" :  "עדיין לא חיפשת פריטים.\n נסה עכשיו - אנחנו נעזור לך!",
+    "we have found" : "מצאנו",
+    "try again" : "נסה שוב!",
+
+
+
+
+    "bookmarks" : "סימניות",
+    "readmarks" : "מסומן כקריאn",
+    "sign in first" : "היכנס ראשון",
+    "sign in to save your favourite articles here" : "היכנס כדי לשמור את המאמרים המועדפים עליך כאן",
+    "sign in to save your read marked articles here" : "היכנס כדי לשמור כאן את המאמרים המסומנים בקריאה",
+    "save your favourite articles here" : "שמור את המאמרים האהובים עליך כאן",
+    "save your read marked articles here" : "שמור כאן את המאמרים המסומנים בקריאה",
+
+
+
+
+    "check your internet connection!" : "תבדוק את חיבור האינטרנט שלך!",
+    "something is wrong. please try again." : "משהו לא בסדר. בבקשה נסה שוב.",
+    "error fb login" : "שגיאה בכניסה לפייסבוק! אנא נסה עם גוגל",
+
+
+    
+    "cancel" : "לְבַטֵל",
+    "no sign in title" : "היכנס תחילה כדי לגשת לתכונה זו",
+    "no sign in subtitle" : "עדיין לא נכנסת. אנא היכנס כדי לבטל את הנעילה של תכונה זו",
+
+    
+    
+    "comments" : "הערות",
+    "write a comment" : "הערות",
+
+
+    
+    "no content" : "לא נמצא תוכן",
+    "flag this comment" : "סמן תגובה זו",
+    "unflag this comment" : "בטל את סימון התגובה הזו",
+    "report" : "להגיש תלונה",
+    "delete" : "לִמְחוֹק",
+    "report-info" : "הדוח שלך נשלח בהצלחה למנהלי המערכת",
+    "report-info1" : "תודה על הדיווח שלך. אנו נשיב תוך 24 שעות.",
+    "report-guest" : "נדרשת כניסה!",
+    "report-guest1" : "עליך להיכנס כדי לדווח על הערות כלשהן",
+    "comment flagged" : "תגובה זו סומנה!",
+
+
+    "notifications" : "התראות",
+    "notification details" : "פרטי הודעה",
+    "custom notifications": "התראות מותאמות אישית",
+    "news notifications": "הודעות מאמרים",
+    "no notification": "לא נמצאו התראות",
+
+
+    
+    "general settings" : "הגדרות כלליות",
+    "dark mode" : "מצב כהה",
+    "login" : "התחברות",
+    "get notifications" : "לקבל התראות",
+    "contact us" : "צור קשר",
+    "rate this app" : "דרג את האפליקציה הזו",
+    "licence" : "רישיון",
+    "privacy policy" : "מדיניות הפרטיות",
+    "about us" : "עלינו",
+    "logout" : "להתנתק",
+    "edit profile" : "ערוך פרופיל",
+    "update profile" : "עדכן פרופיל",
+    "updated successfully" : "עודכן בהצלחה",
+    "enter new name" : "הזן שם חדש",
+
+    "logout title" : "האם אתה באמת רוצה להתנתק מהאפליקציה?",
+    "yes" : "כן",
+    "no" : "לא",
+
+    "language" : "שפה",
+    "select language" : "בחר שפה",
+
+    "buy now" : "קנה את האפליקציה הזו",
+    "buy now subtitle" : "קנה את קוד המקור המלא כאן",
+
+    
+    "facebook page" : "עמוד בפייסבוק",
+    "youtube channel" : "ערוץ יוטיוב",
+    "twitter": "טוויטר",
+    "views": "צפיות"
+
+
+
+}

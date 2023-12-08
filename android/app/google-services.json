@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "975577279727",
+    "firebase_url": "https://meir-eliyahu-app-default-rtdb.firebaseio.com",
+    "project_id": "meir-eliyahu-app",
+    "storage_bucket": "meir-eliyahu-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975577279727:android:c6c8e3bdf804ff50e53f1a",
+        "android_client_info": {
+          "package_name": "meireliyahu.ace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975577279727-k3n3qcglq96sucb3kdmcv5he0qv3tohh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "meireliyahu.ace",
+            "certificate_hash": "2b3e5095c1ff3b77235f821f90eb44440844a9a8"
+          }
+        },
+        {
+          "client_id": "975577279727-rp2cp8huh40f5rlhesuubndcivrlktk4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "meireliyahu.ace",
+            "certificate_hash": "9355acc3d18b1a361aba159ff3f5d96a0bdfa00d"
+          }
+        },
+        {
+          "client_id": "975577279727-ufir9727ia28h9j4ffeahfgrmtkj0pou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "meireliyahu.ace",
+            "certificate_hash": "484aad3a421971c16ee4b960f0ae05b175762cf1"
+          }
+        },
+        {
+          "client_id": "975577279727-d72ie42p1jm03eh9v2h9gg0cundgcrm3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP-b2GCK8S2ie5MQHrb-iaI2bW0fRpSUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975577279727-d72ie42p1jm03eh9v2h9gg0cundgcrm3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "975577279727-0htaiq9iq3lev790459g4m4d5s4l8svu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "meireliyahu.ace"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

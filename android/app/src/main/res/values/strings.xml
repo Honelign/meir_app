@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<resources>
+
+   <!-- Replace with your App Name -->
+   <string name="app_name">Meir Eliyahu</string>
+
+   <!-- Replace with your fb app id -->
+   <string name="facebook_app_id">269791459142979</string>
+
+   <!-- Replace with your fb+app_id -->
+   <string name="fb_login_protocol_scheme">fb269791459142979</string>
+
+   <string name="facebook_client_token">85d5f6bc6d9934a9a2bdc8f83cd1e60b</string>
+</resources>

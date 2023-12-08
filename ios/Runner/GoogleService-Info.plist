@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>975577279727-0htaiq9iq3lev790459g4m4d5s4l8svu.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.975577279727-0htaiq9iq3lev790459g4m4d5s4l8svu</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>975577279727-k3n3qcglq96sucb3kdmcv5he0qv3tohh.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAju1UlCf_TvyKLwAAM3bPb_lMTKK4SYyM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>975577279727</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>meireliyahu.ace</string>
+	<key>PROJECT_ID</key>
+	<string>meir-eliyahu-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>meir-eliyahu-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:975577279727:ios:b7b82f361a9eccc3e53f1a</string>
+	<key>DATABASE_URL</key>
+	<string>https://meir-eliyahu-app-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
