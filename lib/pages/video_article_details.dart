@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:feature_discovery/feature_discovery.dart';
+import 'package:fl_pip/fl_pip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -62,20 +63,33 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
     _controller = YoutubePlayerController(
         initialVideoId: widget.data!.videoID!,
         flags: YoutubePlayerFlags(
-          autoPlay: false,
-          mute: false,
-          forceHD: false,
-          loop: true,
-          controlsVisibleAtStart: false,
-          enableCaption: false,
-          startAt: positionsList
-        ));
+            autoPlay: false,
+            mute: false,
+            forceHD: false,
+            loop: true,
+            controlsVisibleAtStart: false,
+            enableCaption: false,
+            startAt: positionsList));
   }
 
   void _handleShare() {
-    DynamicLinkProvider().createLink(widget.data!.timestamp!).then((value) => Share.share('${widget.data!.title}, Check this out on the latest Rav Meir Eliyahu app, I know you will find this video interesting and exciting.\n${value} '));
+    DynamicLinkProvider().createLink(widget.data!.timestamp!).then((value) =>
+        Share.share(
+            '${widget.data!.title}, Check this out on the latest Rav Meir Eliyahu app, I know you will find this video interesting and exciting.\n${value} '));
   }
 
+  Future<bool> initPip() async {
+    debugPrint('init started');
+    final bool isStarted = await FlPiP().enable(
+        ios: const FlPiPiOSConfig(
+            enabledWhenBackground: true,
+            path: 'assets/landscape.mp4',
+            packageName: null),
+        android: const FlPiPAndroidConfig(
+            enabledWhenBackground: true, aspectRatio: Rational.maxLandscape()));
+    debugPrint('isStarted: $isStarted');
+    return isStarted;
+  }
 /*
   void _handleShare() {
     final sb = context.read<SignInBloc>();
@@ -138,6 +152,7 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
     Future.delayed(Duration(milliseconds: 0)).then((value) async {
       await initPrefs();
     });
+    initPip();
 
     scrollController = new ScrollController();
     isLocalVideo = !widget.data!.youtubeVideoUrl!.contains("youtube.com");
@@ -148,7 +163,6 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
       });
     });
 
-
 /*
     FeatureDiscovery.clearPreferences(context, <String>{
           'share_id',
@@ -157,7 +171,7 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
           'speed_id'
     });
 */
-    SchedulerBinding.instance!.addPostFrameCallback((Duration duration) {
+    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
       FeatureDiscovery.discoverFeatures(
         context,
         const <String>{
@@ -172,9 +186,11 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
     preferences = await SharedPreferences.getInstance();
 
     if (!isLocalVideo) {
-      positionsList = json.decode(preferences.getString('saved_positions') ?? '{}');
+      positionsList =
+          json.decode(preferences.getString('saved_positions') ?? '{}');
 
-      print("Current position is: " + positionsList[widget.data!.title!].toString());
+      print("Current position is: " +
+          positionsList[widget.data!.title!].toString());
       initYoutube(positionsList[widget.data!.title!] ?? 0);
     }
   }
@@ -185,7 +201,8 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
       _controller!.dispose();
       Config.current_seconds = _controller!.value.position.inSeconds;
       if (_controller!.value.position.inSeconds != 0) {
-        positionsList[widget.data!.title!] = _controller!.value.position.inSeconds;
+        positionsList[widget.data!.title!] =
+            _controller!.value.position.inSeconds;
         preferences.setString('saved_positions', json.encode(positionsList));
       }
       //print("Current position of player: " + _controller.value.position.inSeconds.toString());
@@ -195,8 +212,7 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
 
   @override
   void deactivate() {
-    if (!isLocalVideo)
-    _controller!.pause();
+    if (!isLocalVideo) _controller!.pause();
     super.deactivate();
   }
 
@@ -211,17 +227,19 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
             context,
             d,
             sb)
-        : (_controller != null ? YoutubePlayerBuilder(
-      player: YoutubePlayer(
-        controller: _controller!,
-        showVideoProgressIndicator: true,
-        thumbnail:
-        CustomCacheImage(imageUrl: d.thumbnailImagelUrl, radius: 0),
-      ),
-      builder: (context, player) {
-        return buildScaffold(player, context, d, sb);
-      },
-    ) : Container());
+        : (_controller != null
+            ? YoutubePlayerBuilder(
+                player: YoutubePlayer(
+                  controller: _controller!,
+                  showVideoProgressIndicator: true,
+                  thumbnail: CustomCacheImage(
+                      imageUrl: d.thumbnailImagelUrl, radius: 0),
+                ),
+                builder: (context, player) {
+                  return buildScaffold(player, context, d, sb);
+                },
+              )
+            : Container());
   }
 
   void toTop() {
@@ -251,7 +269,8 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
                             children: [
                               IconButton(
                                 icon: ClipRRect(
-                                  borderRadius: BorderRadius.all(Radius.circular(22)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(22)),
                                   child: Container(
                                     padding: EdgeInsets.all(4),
                                     color: Color(0x44000000),
@@ -264,41 +283,50 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
                                 },
                               ),
                               Spacer(),
-                              if (d.sourceUrl == null) Container() else IconButton(
-                                      icon: ClipRRect(
-                                        borderRadius: BorderRadius.all(Radius.circular(22)),
-                                        child: Container(
-                                          padding: EdgeInsets.all(4),
-                                          color: Color(0x44000000),
-                                          child: Icon(Feather.external_link,
-                                              size: 22, color: Colors.white),
-                                        ),
-                                      ),
-                                      onPressed: () => AppService()
-                                          .openLinkWithCustomTab(
-                                              context, d.sourceUrl!),
+                              if (d.sourceUrl == null)
+                                Container()
+                              else
+                                IconButton(
+                                  icon: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(22)),
+                                    child: Container(
+                                      padding: EdgeInsets.all(4),
+                                      color: Color(0x44000000),
+                                      child: Icon(Feather.external_link,
+                                          size: 22, color: Colors.white),
                                     ),
+                                  ),
+                                  onPressed: () => AppService()
+                                      .openLinkWithCustomTab(
+                                          context, d.sourceUrl!),
+                                ),
                               DescribedFeatureOverlay(
                                 featureId: 'share_id',
                                 tapTarget: ClipRRect(
-                                  borderRadius: BorderRadius.all(Radius.circular(22)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(22)),
                                   child: Container(
                                       padding: EdgeInsets.all(4),
                                       color: Color(0x44000000),
-                                      child: const Icon(Icons.share, size: 22, color: Colors.white)),
+                                      child: const Icon(Icons.share,
+                                          size: 22, color: Colors.white)),
                                 ),
                                 title: Text('Share Article'),
-                                description: Text('Now when you share an article with family or friends, they will be linked DIRECTLY to the article you shared!  If they do not have the app, it will direct them to download it!'),
+                                description: Text(
+                                    'Now when you share an article with family or friends, they will be linked DIRECTLY to the article you shared!  If they do not have the app, it will direct them to download it!'),
                                 backgroundColor: Config().appColor,
                                 targetColor: Colors.white,
                                 textColor: Colors.white,
                                 child: IconButton(
                                   icon: ClipRRect(
-                                    borderRadius: BorderRadius.all(Radius.circular(22)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(22)),
                                     child: Container(
                                         padding: EdgeInsets.all(4),
                                         color: Color(0x44000000),
-                                        child: const Icon(Icons.share, size: 22, color: Colors.white)),
+                                        child: const Icon(Icons.share,
+                                            size: 22, color: Colors.white)),
                                   ),
                                   onPressed: () {
                                     _handleShare();
@@ -317,7 +345,8 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
+                              padding:
+                                  const EdgeInsets.fromLTRB(20, 15, 20, 10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -326,16 +355,20 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
                                       Container(
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(5),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                             color: context
-                                                .watch<ThemeBloc>()
-                                                .darkTheme ==
-                                                false
-                                                ? CustomColor().loadingColorLight
-                                                : CustomColor().loadingColorDark,
+                                                        .watch<ThemeBloc>()
+                                                        .darkTheme ==
+                                                    false
+                                                ? CustomColor()
+                                                    .loadingColorLight
+                                                : CustomColor()
+                                                    .loadingColorDark,
                                           ),
                                           child: AnimatedPadding(
-                                            duration: Duration(milliseconds: 1000),
+                                            duration:
+                                                Duration(milliseconds: 1000),
                                             padding: EdgeInsets.only(
                                                 left: 10,
                                                 right: rightPaddingValue,
@@ -356,7 +389,8 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
                                             uid: sb.uid,
                                             timestamp: d.timestamp),
                                         title: Text('Mark as read'),
-                                        description: Text('When you click on this, your article\nwill be marked as “read” and will\nno longer appear here'),
+                                        description: Text(
+                                            'When you click on this, your article\nwill be marked as “read” and will\nno longer appear here'),
                                         backgroundColor: Config().appColor,
                                         targetColor: Colors.white,
                                         textColor: Colors.white,
@@ -476,7 +510,10 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
                               ),
                             ),
                             HtmlBodyWidget(
-                              content: '<h2 style="font-size:10vw">'+d.title! +'</h2><br/>'+d.description!,
+                              content: '<h2 style="font-size:10vw">' +
+                                  d.title! +
+                                  '</h2><br/>' +
+                                  d.description!,
                               isIframeVideoEnabled: false,
                               isVideoEnabled: false,
                               isimageEnabled: true,
@@ -539,156 +576,156 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
           return (describeEnum(processingState) == 'idle')
               ? Container()
               : Container(
-            padding: EdgeInsets.all(12),
-            margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    Color(0xff7878ff),
-                    Color(0xff00008B)
-                    //add more colors for gradient
-                  ],
-                  begin: Alignment.topLeft, //begin of the gradient color
-                  end: Alignment.bottomRight, //end of the gradient color
-                  stops: [0, 0.9] //stops for individual color
-                //set the stops number equal to numbers of color
-              ),
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 8,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-            width: double.maxFinite,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    StreamBuilder<MediaItem?>(
-                      stream: audioHandler.mediaItem,
-                      builder: (context, snapshot) {
-                        final mediaItem = snapshot.data;
-                        return Text(
-                          mediaItem!.title,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: -0.6,
-                              wordSpacing: 1),
-                        );
-                      },
-                    ),
-                    Expanded(child: Container()),
-                    (describeEnum(processingState) == 'loading')
-                        ? Container(
-                        width: 28,
-                        height: 28,
-                        child: CircularProgressIndicator())
-                        : Container(),
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(22)),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        color: Color(0x33000000),
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.white70,
-                              size: 24,
-                            ),
-                            onPressed: () {
-                              audioHandler.stop();
-                            }),
+                  padding: EdgeInsets.all(12),
+                  margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [
+                          Color(0xff7878ff),
+                          Color(0xff00008B)
+                          //add more colors for gradient
+                        ],
+                        begin: Alignment.topLeft, //begin of the gradient color
+                        end: Alignment.bottomRight, //end of the gradient color
+                        stops: [0, 0.9] //stops for individual color
+                        //set the stops number equal to numbers of color
+                        ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 8,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    StreamBuilder<bool>(
-                      stream: audioHandler.playbackState
-                          .map((state) => state.playing)
-                          .distinct(),
-                      builder: (context, snapshot) {
-                        final playing = snapshot.data ?? false;
-                        return (playing)
-                            ? ClipRRect(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(22)),
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            color: Color(0x33000000),
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.pause_circle_filled,
-                                  color: Colors.white70,
-                                  size: 34,
-                                ),
-                                onPressed: () {
-                                  audioHandler.pause();
-                                  //_pause();
-                                }),
-                          ),
-                        )
-                            : ClipRRect(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(22)),
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            color: Color(0x33000000),
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.play_circle_filled,
-                                  color: Colors.white70,
-                                  size: 34,
-                                ),
-                                onPressed: () {
-                                  if (audioHandler
-                                      .mediaItem.value !=
-                                      null) audioHandler.play();
-                                }),
-                          ),
-                        );
-                      },
-                    ),
-                    StreamBuilder<MediaState>(
-                      stream: mediaStateStream,
-                      builder: (context, snapshot) {
-                        final mediaState = snapshot.data;
-                        preferences.setString(
-                            'CurrentPlayingPosition',
-                            jsonEncode(mediaState?.position.inSeconds)
-                                .toString());
-                        return Expanded(
-                          child: SeekBar(
-                            duration: mediaState?.mediaItem?.duration ??
-                                Duration.zero,
-                            position:
-                            mediaState?.position ?? Duration.zero,
-                            onChangeEnd: (newPosition) {
-                              /*await prefs.setString('CurrentPlayingPosition', jsonEncode(newPosition).toString());*/
-                              audioHandler.seek(newPosition);
+                    ],
+                  ),
+                  width: double.maxFinite,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          StreamBuilder<MediaItem?>(
+                            stream: audioHandler.mediaItem,
+                            builder: (context, snapshot) {
+                              final mediaItem = snapshot.data;
+                              return Text(
+                                mediaItem!.title,
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: -0.6,
+                                    wordSpacing: 1),
+                              );
                             },
                           ),
-                        );
-                      },
-                    ),
-                    /*ClipRRect(
+                          Expanded(child: Container()),
+                          (describeEnum(processingState) == 'loading')
+                              ? Container(
+                                  width: 28,
+                                  height: 28,
+                                  child: CircularProgressIndicator())
+                              : Container(),
+                          ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(22)),
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              color: Color(0x33000000),
+                              child: IconButton(
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: Colors.white70,
+                                    size: 24,
+                                  ),
+                                  onPressed: () {
+                                    audioHandler.stop();
+                                  }),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          StreamBuilder<bool>(
+                            stream: audioHandler.playbackState
+                                .map((state) => state.playing)
+                                .distinct(),
+                            builder: (context, snapshot) {
+                              final playing = snapshot.data ?? false;
+                              return (playing)
+                                  ? ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(22)),
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        color: Color(0x33000000),
+                                        child: IconButton(
+                                            icon: Icon(
+                                              Icons.pause_circle_filled,
+                                              color: Colors.white70,
+                                              size: 34,
+                                            ),
+                                            onPressed: () {
+                                              audioHandler.pause();
+                                              //_pause();
+                                            }),
+                                      ),
+                                    )
+                                  : ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(22)),
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        color: Color(0x33000000),
+                                        child: IconButton(
+                                            icon: Icon(
+                                              Icons.play_circle_filled,
+                                              color: Colors.white70,
+                                              size: 34,
+                                            ),
+                                            onPressed: () {
+                                              if (audioHandler
+                                                      .mediaItem.value !=
+                                                  null) audioHandler.play();
+                                            }),
+                                      ),
+                                    );
+                            },
+                          ),
+                          StreamBuilder<MediaState>(
+                            stream: mediaStateStream,
+                            builder: (context, snapshot) {
+                              final mediaState = snapshot.data;
+                              preferences.setString(
+                                  'CurrentPlayingPosition',
+                                  jsonEncode(mediaState?.position.inSeconds)
+                                      .toString());
+                              return Expanded(
+                                child: SeekBar(
+                                  duration: mediaState?.mediaItem?.duration ??
+                                      Duration.zero,
+                                  position:
+                                      mediaState?.position ?? Duration.zero,
+                                  onChangeEnd: (newPosition) {
+                                    /*await prefs.setString('CurrentPlayingPosition', jsonEncode(newPosition).toString());*/
+                                    audioHandler.seek(newPosition);
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                          /*ClipRRect(
                                         borderRadius:
                                         BorderRadius.all(
                                             Radius.circular(
@@ -710,49 +747,49 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
                                         ),
                                       ),
                                       SizedBox(width: 10.0),*/
-                    StreamBuilder<double>(
-                      stream: audioHandler.playbackState
-                          .map((state) => state.speed)
-                          .distinct(),
-                      builder: (context, snapshot) {
-                        double speed = snapshot.data ?? 1.0;
-                        return ClipRRect(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(22)),
-                          child: Container(
-                            width: 55,
-                            height: 45,
-                            color: Color(0x33000000),
-                            child: GestureDetector(
-                              onTap: () {
-                                if (speed == 1.75)
-                                  speed = 1.0;
-                                else
-                                  speed = speed + 0.25;
-                                //_audioPlayer.setPlaybackRate(playbackRate);
-                                audioHandler.setSpeed(speed);
-                              },
-                              child: Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Center(
-                                      child: Text(
-                                        speed.toString() + 'x',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ))),
-                            ),
+                          StreamBuilder<double>(
+                            stream: audioHandler.playbackState
+                                .map((state) => state.speed)
+                                .distinct(),
+                            builder: (context, snapshot) {
+                              double speed = snapshot.data ?? 1.0;
+                              return ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(22)),
+                                child: Container(
+                                  width: 55,
+                                  height: 45,
+                                  color: Color(0x33000000),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if (speed == 1.75)
+                                        speed = 1.0;
+                                      else
+                                        speed = speed + 0.25;
+                                      //_audioPlayer.setPlaybackRate(playbackRate);
+                                      audioHandler.setSpeed(speed);
+                                    },
+                                    child: Padding(
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Center(
+                                            child: Text(
+                                          speed.toString() + 'x',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
+                        ],
+                      ),
+                    ],
+                  ),
+                );
         },
       ),
     );
