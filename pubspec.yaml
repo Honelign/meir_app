@@ -6,88 +6,82 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: '>=3.0.2 <4.0.0'
+  flutter: '>=3.16.0'
+  # sdk: '>=2.19.6 <3.0.0'
 #  sdk: '>=2.12.0 <3.0.0'
 dependencies:
-  flutter:
-    sdk: flutter
-# Test
-  uni_links: ^0.5.1
+  audio_service: ^0.18.11
+  audioplayers: ^5.2.1
   badges: ^3.1.1
+  better_player:
+    git:
+      url: https://github.com/tintran-dev/betterplayer.git
   cached_network_image: ^3.2.3
   cloud_firestore: ^4.9.1
   cupertino_icons: ^1.0.6
   dots_indicator: ^2.1.2
   easy_localization: ^3.0.3
+  facebook_audience_network: ^1.0.1
+  feature_discovery: ^0.14.1
+  firebase_analytics: ^10.4.5
   firebase_auth: ^4.9.0
-  #firebase_core: ^1.11.0
+  firebase_core: ^2.15.1
+  firebase_dynamic_links: ^5.3.5
   firebase_messaging: ^14.6.7
   firebase_storage: ^11.5.4
-  flutter_web_browser: ^0.17.1
+  fl_pip: ^1.0.0
+  flutter:
+    sdk: flutter
+  flutter_facebook_auth: ^5.0.1
   flutter_html: ^3.0.0-beta.2
+  flutter_icons:
+    git:
+      url: https://github.com/adarsh-technocrat/flutter-icons
+  flutter_waya: ^8.6.2
+  flutter_web_browser: ^0.17.1
+  fluttertoast: ^8.2.2
   google_fonts: ^4.0.4
+  google_mobile_ads: ^2.2.0
   google_sign_in: ^6.1.5
   html: ^0.15.4
   html_unescape: ^2.0.0
   image_picker: ^1.0.4
   intl: ^0.18.1
   introduction_screen: ^3.1.8
+  just_audio: ^0.9.34
   launch_review: ^3.0.1
   line_icons: ^2.0.3
   lottie: ^2.3.2
-  package_info: ^2.0.2
-  path_provider: ^2.1.1
-  provider: ^6.0.5
-  share: ^2.0.4
-  shared_preferences: ^2.2.1
-  skeleton_text: ^3.0.1
-  fluttertoast: ^8.2.2
-  url_launcher: ^6.1.11
-  youtube_player_flutter: ^8.1.2
-  rounded_loading_button: ^2.1.0
-  firebase_analytics: ^10.4.5
-  flutter_facebook_auth: ^5.0.1
-  the_apple_sign_in: ^1.1.1
-  #better_player: ^0.0.83
-  better_player:
-    git:
-      url: https://github.com/tintran-dev/betterplayer.git
-  flutter_icons:
-    git:
-      url: https://github.com/adarsh-technocrat/flutter-icons
   md2_tab_indicator:
     git:
       url: https://github.com/westdabestdb/md2_tab_indicator
-
-  #google_mobile_ads: ^1.0.1
-  facebook_audience_network: ^1.0.1
+  package_info: ^2.0.2
+  path_provider: ^2.1.1
   printing: ^5.10.4
-  feature_discovery: ^0.14.1
-  audio_service: ^0.18.11
-  just_audio: ^0.9.34
-  firebase_dynamic_links: ^5.3.5
-  firebase_core: ^2.15.1
-  google_mobile_ads: ^2.2.0
-  audioplayers: ^4.1.0
+  provider: ^6.0.5
+  rounded_loading_button: ^2.1.0
+  share: ^2.0.4
+  shared_preferences: ^2.2.1
+  skeleton_text: ^3.0.1
+  the_apple_sign_in: ^1.1.1
+  uni_links: ^0.5.1
+  url_launcher: ^6.1.11
   vimeo_player_flutter: ^0.0.3+2
+  youtube_player_flutter: ^8.1.2
   youtube_player_iframe: ^3.1.0
 
 #  firebase_crashlytics: ^2.8.1
-
-
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
 
   flutter_launcher_icons: ^0.13.1
-
+  flutter_test:
+    sdk: flutter
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/icon.png"
-
-
 
 # The following section is specific to Flutter.
 flutter:
