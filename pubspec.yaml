@@ -14,9 +14,10 @@ dependencies:
   audio_service: ^0.18.11
   audioplayers: ^5.2.1
   badges: ^3.1.1
-  better_player:
-    git:
-      url: https://github.com/tintran-dev/betterplayer.git
+  # better_player:
+  #   git:
+  #     url: https://github.com/tintran-dev/betterplayer.git
+  better_player: ^0.0.83
   cached_network_image: ^3.2.3
   cloud_firestore: ^4.9.1
   cupertino_icons: ^1.0.6
@@ -33,11 +34,18 @@ dependencies:
   fl_pip: ^1.0.0
   flutter:
     sdk: flutter
-  flutter_facebook_auth: ^5.0.1
+  flutter_facebook_auth: ^6.0.1
+
+  # facebook_auth_desktop: ^1.0.2
   flutter_html: ^3.0.0-beta.2
+  # flutter_icons: ^1.1.0
+  # fluttericon: ^2.0.0
+  # flutter_icons: ^1.1.0
   flutter_icons:
     git:
-      url: https://github.com/adarsh-technocrat/flutter-icons
+      url: https://github.com/adarsh-technocrat/flutter-icons 
+      # git@github.com:adarsh-technocrat/flutter-icons.git
+      # 
   flutter_waya: ^8.6.2
   flutter_web_browser: ^0.17.1
   fluttertoast: ^8.2.2
@@ -70,9 +78,17 @@ dependencies:
   vimeo_player_flutter: ^0.0.3+2
   youtube_player_flutter: ^8.1.2
   youtube_player_iframe: ^3.1.0
+  flutter_playout:
+    path: ../
+  youtube_explode_dart: ^2.0.4
+  http: ^1.1.2
+  
+
 
 #  firebase_crashlytics: ^2.8.1
 dev_dependencies:
+  flutter_playout:
+    path: ../
 
   flutter_launcher_icons: ^0.13.1
   flutter_test:

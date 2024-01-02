@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:fl_pip/fl_pip.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +21,7 @@ import 'package:news_app/pages/comments.dart';
 import 'package:news_app/services/app_service.dart';
 import 'package:news_app/utils/cached_image.dart';
 import 'package:news_app/utils/sign_in_dialog.dart';
+import 'package:news_app/video.dart';
 import 'package:news_app/widgets/bookmark_icon.dart';
 import 'package:news_app/widgets/html_body.dart';
 import 'package:news_app/widgets/local_video_player.dart';
@@ -26,12 +29,13 @@ import 'package:news_app/widgets/love_count.dart';
 import 'package:news_app/widgets/love_icon.dart';
 import 'package:news_app/widgets/related_articles.dart';
 import 'package:news_app/widgets/views_count.dart';
-import 'package:share/share.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'dart:io';
-import 'package:easy_localization/easy_localization.dart';
+
+import 'package:flutter_playout/player_state.dart' as playout;
+
 import '../blocs/mark_read_bloc.dart';
 import '../config/config.dart';
 import '../main.dart';
@@ -39,17 +43,25 @@ import '../services/dynamic_link.dart';
 import '../utils/next_screen.dart';
 import '../widgets/readmark_icon.dart';
 import 'home.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart' as utube;
 
 class VideoArticleDetails extends StatefulWidget {
   final Article? data;
 
-  const VideoArticleDetails({Key? key, required this.data}) : super(key: key);
+  const VideoArticleDetails({
+    Key? key,
+    this.data,
+  }) : super(key: key);
 
   @override
   _VideoArticleDetailsState createState() => _VideoArticleDetailsState();
 }
 
 class _VideoArticleDetailsState extends State<VideoArticleDetails> {
+//ios config for play
+  playout.PlayerState _desiredState = playout.PlayerState.PLAYING;
+  bool _showPlayerControls = true;
+
   double rightPaddingValue = 130;
   YoutubePlayerController? _controller;
   bool isLocalVideo = false;
@@ -75,7 +87,7 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
   void _handleShare() {
     DynamicLinkProvider().createLink(widget.data!.timestamp!).then((value) =>
         Share.share(
-            '${widget.data!.title}, Check this out on the latest Rav Meir Eliyahu app, I know you will find this video interesting and exciting.\n${value} '));
+            '${widget.data!.title}, Check this out on the latest Rav Meir Eliyahu app, I know you will find this video interesting and exciting.\n$value '));
   }
 
   Future<bool> initPip() async {
@@ -145,10 +157,41 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
     });
   }
 
+  String streamLink = '';
+  bool isStreamLoading = false;
+  Future<String> getStreamLink(String id) async {
+    isStreamLoading = true;
+    String streamUrl = '';
+    try {
+      var yt = utube.YoutubeExplode();
+      var manifest = await yt.videos.streamsClient.getManifest(id);
+      var streamInfo = manifest.muxed.withHighestBitrate();
+
+      var stream = yt.videos.streamsClient.get(streamInfo);
+      debugPrint('Stream url: ${streamInfo.url}');
+      debugPrint('Stream : $stream');
+
+      streamUrl = streamInfo.url.toString();
+      streamLink = streamUrl;
+      debugPrint('Stream link: $streamLink');
+      setState(() {
+        isStreamLoading = false;
+      });
+
+      return streamUrl;
+    } catch (e) {
+      debugPrint('Error getting stream: $e');
+      setState(() {
+        isStreamLoading = false;
+      });
+    }
+    return streamUrl;
+  }
+
   @override
   void initState() {
     super.initState();
-
+    getStreamLink(widget.data!.videoID!);
     Future.delayed(Duration(milliseconds: 0)).then((value) async {
       await initPrefs();
     });
@@ -260,8 +303,15 @@ class _VideoArticleDetailsState extends State<VideoArticleDetails> {
                     Stack(
                       children: [
                         Container(
-                          child: player,
-                        ),
+                            child: isStreamLoading
+                                ? Center(child: CircularProgressIndicator())
+                                : VideoPlayout(
+                                    url: streamLink,
+                                    desiredState: _desiredState,
+                                    showPlayerControls: _showPlayerControls,
+                                  )
+                            //player,
+                            ),
                         Align(
                           alignment: Alignment.topLeft,
                           child: Row(
